@@ -9,7 +9,7 @@ const Create = () => {
   // states to store the different values of the form fields
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
-  const [rating, setRating] = useState('')
+  const [category, setCategory] = useState('')
   const [formError, setFormError] = useState(null)
 
 
@@ -18,7 +18,7 @@ const Create = () => {
     e.preventDefault()
 
     // to check if all the form fields have been inputted
-    if (!title || !description || !rating) {
+    if (!title || !description || !category) {
       setFormError('Please fill in all the fields.')
       return  //so that no request will be sent to supabase since form field isn't complete
     }
@@ -27,7 +27,7 @@ const Create = () => {
     // to add the inputted data as a row in the task table in supabase
     const { data, error } = await supabase
       .from('tasks')
-      .insert([{ title, description, rating }])
+      .insert([{ title, description, category }])
 
 
     // check if there's an error and output error message
@@ -41,7 +41,9 @@ const Create = () => {
       console.log(data)
       alert('Task created')
       setFormError(null)
-      navigate('/')
+        // navigate('/')
+        // window.location.href = '/'
+        .then(() => navigate('/'))
     }
   }
 
@@ -59,7 +61,7 @@ const Create = () => {
                 <div className="p-2 w-1/2">
                   <div className="relative">
                     <label htmlFor="title" className="leading-7 text-sm text-gray-600">Title</label>
-                    <input 
+                    <input
                       type="text"
                       id="title"
                       value={title}
@@ -70,13 +72,14 @@ const Create = () => {
 
                 <div className="p-2 w-1/2">
                   <div Name="relative">
-                    <label htmlFor="rating" className="leading-7 text-sm text-gray-600">Rating</label>
+                    <label htmlFor="category" className="leading-7 text-sm text-gray-600">Category</label>
                     <input 
-                      type="number"
-                      id="rating"
-                      value={rating}
-                      onChange={(e) => setRating(e.target.value)}
+                      type="text"
+                      id="category"
+                      value={category}
+                      onChange={(e) => setCategory(e.target.value)}
                       className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+                  
                   </div>
                 </div>
 

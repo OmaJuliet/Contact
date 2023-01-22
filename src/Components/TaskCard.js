@@ -51,7 +51,7 @@ const TaskCard = ({ task, onDelete }) => {
                             <h1 className="title-font text-lg font-medium text-gray-900 mb-3">{task.title}</h1>
                             <p className="leading-relaxed mb-3">{task.description}</p>
                             <div className="flex items-center flex-wrap mt-4">
-                                <a className="text-indigo-500 inline-flex items-center md:mb-2 lg:mb-0">{task.rating}
+                                <a className="text-indigo-500 inline-flex items-center md:mb-2 lg:mb-0">{task.category}
                                 </a>
                                     <span className="mr-3 inline-flex items-center lg:ml-auto md:ml-0 ml-auto leading-none text-sm pr-3 py-1 bg-gray-500 rounded-full p-4">
                                         <Link to={"/" + task.id}>
