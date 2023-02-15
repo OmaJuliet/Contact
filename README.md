@@ -15,13 +15,6 @@ This is React CRUD web application built using Supabase as the backend service.
 - React.js
 - SUpabase for storage
 - Tailwind CSS styling
-- React-Toastify for notification
 - React-icons 
 
 
-
-## App Links 
-
-Production Website Link: ()
-
-Project Github Repo Link: ()

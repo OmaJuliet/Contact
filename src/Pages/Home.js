@@ -7,11 +7,10 @@ const Home = () => {
   const [fetchError, setFetchError] = useState(null);
   const [tasks, setTasks] = useState(null);
 
-  // to update the ui/local state when a task is deleted
+
   const handleDelete = (id) => {
     setTasks(prevTasks => {
       return prevTasks.filter(sm => sm.id !== id)
-      // return prevTasks.filter(ta => ta.id !== id)
     })
   }
 
@@ -37,21 +36,6 @@ const Home = () => {
   }, []);
   return (
     <>
-
-      {/* <div className="page home">
-        {fetchError && <p>{fetchError}</p>}
-        {tasks && (
-          <div className="smoothies">
-            <div className="smoothie-grid">
-              {tasks.map((task) => (
-                <TaskCard key={task.id} task={task} onDelete={handleDelete} />
-              ))}
-            </div>
-          </div>
-        )}
-      </div> */}
-
-
       <div className="container px-5 py-8 mx-auto">
         {fetchError && <p>{fetchError}</p>}
         {tasks && (
