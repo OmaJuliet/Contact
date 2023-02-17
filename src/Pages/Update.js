@@ -12,24 +12,45 @@ const Update = () => {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [number, setNumber] = useState('')
-  const [imageSrc, setImageSrc] = useState('')
+  const [fileUrl, setFileUrl] = useState('')
   const [formError, setFormError] = useState(null)
+
+
+  const uploadImage = async (e) => {
+    const date = Date.now()
+
+    const avatarFile = e.target.files[0]
+    const { data, error } = await supabase
+    .storage
+    .from('images')
+    .update(`public/${date}.jpg`, avatarFile, {
+      cacheControl: '3600',
+      upsert: false
+    })
+    console.log("success", data)
+    console.log("error", error)
+
+    if (data) {
+      setFileUrl(data.path)
+    }
+  }
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault()
 
     // to check if all the form fields have been inputted, so as not to send an empty form to supabase
-    if (!name || !email || !number || !imageSrc) {
-      setFormError('Please fill in all the fields.')
-      return
-    }
+    // if (!name || !email || !number || !fileUrl) {
+    //   setFormError('Please fill in all the fields.')
+    //   return
+    // }
 
     // to add the inputted data as a row in the tasks table in supabase
     const { data, error } = await supabase
       .from('tasks')
 
       //the update method to update the 3 fields: title, description, and rating.
-      .update({ name, email, number, imageSrc })
+      .update({ name, email, number, fileUrl })
 
       // to specify and update the particular task the user wants to update.
       .eq('id', id)
@@ -72,7 +93,7 @@ const Update = () => {
         setName(data.name)
         setEmail(data.email)
         setNumber(data.number)
-        setImageSrc(data.imageSrc)
+        setFileUrl(data.path)
       }
     }
 
@@ -132,21 +153,22 @@ const Update = () => {
                   </div>
                 </div>
 
+
                 <div className="p-2 w-full">
                   <div className="relative">
                     <label htmlFor="file" className="leading-7 text-sm text-gray-600">Image</label>
                     <input
                       type="file"
-                      id="imageSrc"
-                      value={imageSrc}
-                      onChange={(e) => setImageSrc(e.target.value)}/>
+                      id="fileUrl"
+                      onChange={uploadImage}
+                      className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
                   </div>
                 </div>
+
 
                 <div className="p-2 w-full">
                   <button className="flex mx-auto text-white border-0 py-2 px-8 focus:outline-none rounded-lg text-lg">Update contact</button>
                 </div>
-
               </div>
 
               {formError && <p className="error">{formError}</p>}

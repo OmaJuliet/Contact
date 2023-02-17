@@ -9,15 +9,6 @@ const reactimages = "https://tqfruvglcoupvuwfhpzo.supabase.co/storage/v1/object/
 
 const TaskCard = ({ task, onDelete }) => {
 
-    setTimeout(() => {
-        console.log(`${reactimages}/${task.fileurl}`)
-    }, 3000);
-    
-    console.log(`${reactimages}/${task.fileurl}`)
-
-
-    console.log(task)
-    
     const handleDelete = async () => {
         const { data, error } = await supabase
             .from('tasks')
@@ -38,10 +29,10 @@ const TaskCard = ({ task, onDelete }) => {
         <>
             <section className="">
                 <div className="p-4 lg:w-full w-full">
-                    <div className="h-full border-2 bg-green-300 rounded-lg overflow-hidden">
+                    <div className="h-full border-2 bg-gray-300 rounded-lg overflow-hidden">
                         <div className="p-6">
                             <div className="flex flex-wrap">
-                                <img src={`${reactimages}/${task.fileurl}`} className="w-12 h-12 rounded-full" alt="user" />
+                                <img src={`${reactimages}/${task.fileUrl}`} className="w-12 h-12 rounded-full" alt="user" />
                                 <h1 className="text-xl font-semibold text-gray-900 mt-3 ml-3">{task.name}</h1>
                             </div>
                             <div className="mt-6">
