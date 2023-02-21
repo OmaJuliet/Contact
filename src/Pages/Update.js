@@ -2,6 +2,8 @@ import { useEffect, useState } from "react"
 import { useParams, useNavigate } from 'react-router-dom'
 import supabase from "../config/supabaseClient"
 
+const reactimages = "https://tqfruvglcoupvuwfhpzo.supabase.co/storage/v1/object/public/images"
+
 const Update = () => {
   // invoking the useParam hook to get the id parameter
   const { id } = useParams()
@@ -13,6 +15,7 @@ const Update = () => {
   const [email, setEmail] = useState('')
   const [number, setNumber] = useState('')
   const [fileUrl, setFileUrl] = useState('')
+  const [imageUpdate, setImageUpdate] = useState(true)
   const [formError, setFormError] = useState(null)
 
 
@@ -23,7 +26,7 @@ const Update = () => {
     const { data, error } = await supabase
     .storage
     .from('images')
-    .update(`public/${date}.jpg`, avatarFile, {
+    .upload(`public/${date}.jpg`, avatarFile, {
       cacheControl: '3600',
       upsert: false
     })
@@ -33,17 +36,18 @@ const Update = () => {
     if (data) {
       setFileUrl(data.path)
     }
+
   }
-  
+
 
   const handleSubmit = async (e) => {
     e.preventDefault()
 
     // to check if all the form fields have been inputted, so as not to send an empty form to supabase
-    // if (!name || !email || !number || !fileUrl) {
-    //   setFormError('Please fill in all the fields.')
-    //   return
-    // }
+    if (!name || !email || !number || !fileUrl) {
+      setFormError('Please fill in all the fields.')
+      return
+    }
 
     // to add the inputted data as a row in the tasks table in supabase
     const { data, error } = await supabase
@@ -93,7 +97,7 @@ const Update = () => {
         setName(data.name)
         setEmail(data.email)
         setNumber(data.number)
-        setFileUrl(data.path)
+        setFileUrl(data.fileUrl)
       }
     }
 
@@ -110,7 +114,7 @@ const Update = () => {
     <>
       <section className="relative">
         <div className="container px-5 py-4 mx-auto">
-          <div class="flex flex-col text-center w-full mb-12">
+          <div className="flex flex-col text-center w-full mb-12">
             <h1 className="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">Update Contact</h1>
           </div>
           <div className="lg:w-1/2 md:w-2/3 mx-auto">
@@ -149,22 +153,29 @@ const Update = () => {
                       type="number"
                       id="number"
                       value={number}
-                      onChange={(e) => setNumber(e.target.value)}/>
+                      onChange={(e) => setNumber(e.target.value)} />
                   </div>
                 </div>
 
+                {imageUpdate === true ?
 
-                <div className="p-2 w-full">
-                  <div className="relative">
-                    <label htmlFor="file" className="leading-7 text-sm text-gray-600">Image</label>
-                    <input
-                      type="file"
-                      id="fileUrl"
-                      onChange={uploadImage}
-                      className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+                  <div>
+                    <img src={`${reactimages}/${fileUrl}`} alt="" className="w-24 h-24" />
+                    <button onClick={() => {setImageUpdate(false)}}>Change Image</button>
                   </div>
-                </div>
+                  :
 
+                  <div className="p-2 w-full">
+                    <div className="relative">
+                      <label htmlFor="file" className="leading-7 text-sm text-gray-600">Image</label>
+                      <input
+                        type="file"
+                        id="fileUrl"
+                        onChange={uploadImage}
+                        className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+                    </div>
+                  </div>
+                }
 
                 <div className="p-2 w-full">
                   <button className="flex mx-auto text-white border-0 py-2 px-8 focus:outline-none rounded-lg text-lg">Update contact</button>

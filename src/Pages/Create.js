@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import supabase from "../config/supabaseClient";
 
 const Create = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   // states to store the different values of the form fields
   const [name, setName] = useState('')
@@ -34,15 +34,13 @@ const Create = () => {
   }
   
 
-
   const handleSubmit = async (e) => {
     e.preventDefault()
-
 
     // to check if all the form fields have been inputted
     if (!name || !email || !number || !fileUrl) {
       setFormError('Please fill in all the fields.')
-      return  //so that no request will be sent to supabase if the form field isn't complete
+      return  
     }
 
     // to add the inputted data as a row in the task table in supabase
@@ -59,9 +57,7 @@ const Create = () => {
 
     //check for the data. After adding the values in the form field, show the data value in the console and then go to the home page to see it.
     if (data) {
-      console.log(data)
-      navigate('/')
-      alert('Contact created')
+      // console.log(data)
       setFormError(null)
         .then(() => navigate('/'))
     }
@@ -132,8 +128,6 @@ const Create = () => {
                 </div>
 
               </div>
-
-              {/* {formError && <p className="error">{formError}</p>} */}
             </form>
             {formError && <p className="error">{formError}</p>}
           </div>
