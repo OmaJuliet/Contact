@@ -66,10 +66,11 @@ const Update = () => {
     }
 
     // if we have the data, set the error message to null and navigate user back to the home page
-    if (data) {
-      setFormError(null)
-      navigate('/')
-    }
+    // if (data) {
+    //   setFormError(null)
+    //   navigate('/')
+    // }
+    navigate('/')
   }
 
 

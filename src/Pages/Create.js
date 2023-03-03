@@ -40,7 +40,6 @@ const Create = () => {
     // to check if all the form fields have been inputted
     if (!name || !email || !number || !fileUrl) {
       setFormError('Please fill in all the fields.')
-      return  
     }
 
     // to add the inputted data as a row in the task table in supabase
@@ -59,8 +58,9 @@ const Create = () => {
     if (data) {
       // console.log(data)
       setFormError(null)
-        .then(() => navigate('/'))
+        // .then(() => navigate('/'))
     }
+    navigate('/')
   }
 
   return (
