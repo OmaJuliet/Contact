@@ -12,7 +12,7 @@ This is React CRUD web application built using Supabase as the backend service. 
 
 ## Project Live Link
 
-https://tasky-pink.vercel.app/
+https://supa-contact.vercel.app/
 
 
 ## Technologies Used
