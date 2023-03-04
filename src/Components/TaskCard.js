@@ -1,13 +1,25 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import supabase from "../config/supabaseClient";
 import { Link } from 'react-router-dom';
 import { FaTrash, FaEdit } from 'react-icons/fa';
+// import LoadingState from './LoadingState';
+import NoContacts from './NoContacts';
 
 
 const reactimages = "https://tqfruvglcoupvuwfhpzo.supabase.co/storage/v1/object/public/images"
 
 
-const TaskCard = ({ task, onDelete }) => {
+const TaskCard = ({ props, task, onDelete }) => {
+
+    // const [loading, setLoading] = useState(false);
+    const [isEmpty, setIsEmpty] = useState(true);
+
+    useEffect(() => {
+        setTimeout(() => {
+            setIsEmpty(true);
+        }, 1000);
+    }, []);
+
 
     const handleDelete = async () => {
         const { data, error } = await supabase
@@ -25,10 +37,11 @@ const TaskCard = ({ task, onDelete }) => {
         window.location.reload();
     }
 
-
     return (
         <>
             <section className="">
+                {/* {!isEmpty && <NoContacts />} */}
+                {isEmpty ? <NoContacts /> : 
                 <div className="p-4 lg:w-full w-full">
                     <div className="h-full border-2 bg-gray-300 rounded-lg overflow-hidden">
                         <div className="p-6">
@@ -53,7 +66,10 @@ const TaskCard = ({ task, onDelete }) => {
                         </div>
                     </div>
                 </div>
+                }
+            {/* } */}
             </section>
+
         </>
     )
 }
