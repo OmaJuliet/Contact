@@ -44,3 +44,7 @@ form button {
   padding: 10px 30px;
   margin: 0 auto;
 }
+
+supabase-auth-ui_ui-container c-jTXIoq c-jTXIoq-bsgKCL-direction-vertical c-jTXIoq-bXHFxK-gap-large {
+  display: none;
+}
